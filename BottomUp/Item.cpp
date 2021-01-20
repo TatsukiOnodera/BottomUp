@@ -4,60 +4,34 @@ Item::Item()
 {
 	boxPosX = 0;
 	boxPosY = 0;
-	isSelect = 0;
-	isCarry = 0;
-	isPut = 0;
+	Item1 = 0;
+	Item2 = 0;
 }
 
 void Item::select(int& cursorX, int& cursorY, const int WIN_WIDTH, const int WIN_HEIGHT)
 {
 	if (cursorX >= WIN_WIDTH - 220)
 	{
-		if (cursorY <= WIN_HEIGHT / 2)
+		if (cursorY <= WIN_HEIGHT / 2 && Item1 == NONE)
 		{
-			isSelect = 1;
+			Item1 = SELECT;
 		}
-		if (cursorY > WIN_HEIGHT / 2 && cursorY <= WIN_HEIGHT)
+		if (cursorY > WIN_HEIGHT / 2 && cursorY <= WIN_HEIGHT && Item2 == NONE)
 		{
-			isSelect = 2;
+			Item2 = SELECT;
 		}
-	} else
-	{
-		isSelect = 0;
-	}
+	} 
 }
 
 void Item::carry(int& mouse, int& oldMouse)
 {
-	if (isSelect == 1)
+	if (Item1 == SELECT)
 	{
-		if (isCarry == 0 || isCarry == 2)
+		if (Item1 == SELECT)
 		{
 			if (mouse == 1 && oldMouse == 0)
 			{
-				isCarry = 1;
-			}
-		} else if (isCarry <= 2)
-		{
-			if (mouse == 1 && oldMouse == 0)
-			{
-				isCarry = 0;
-			}
-		}
-	}
-	if (isSelect == 2)
-	{
-		if (isCarry == 0 || isCarry == 1)
-		{
-			if (mouse == 1 && oldMouse == 0)
-			{
-				isCarry = 2;
-			}
-		} else if (isCarry <= 2)
-		{
-			if (mouse == 1 && oldMouse == 0)
-			{
-				isCarry = 0;
+				Item1 = CARRY;
 			}
 		}
 	}
@@ -68,43 +42,41 @@ void Item::put(int& cursorX, int& cursorY, int& mouse, int& oldMouse, int map[24
 	boxPosX = cursorX / 64;
 	boxPosY = (cursorY - stage->getStageStart()) / 64;
 
-	if (cursorX <= 1280 && cursorY <= 768 && cursorX >= 0 && cursorY >= 0 && stage->getIsChangeStage() == 0)
+	if (cursorX <= 1500 && cursorY <= 844 && cursorX >= 0 && cursorY >= 0 && stage->getIsChangeStage() == 0)
 	{
-		if (isCarry == 1)
+		if (Item1 == CARRY)
 		{
 			if (mouse == 1 && oldMouse == 0)
 			{
-				isPut = 1;
-				isCarry = 0;
+				Item1 = PUT;
 			}
 		}
-		if (isCarry == 2)
+		if (Item2 == CARRY)
 		{
 			if (mouse == 1 && oldMouse == 0)
 			{
-				isPut = 2;
-				isCarry = 0;
+				Item2 = PUT;
 			}
 		}
 
 		for (int i = -1; i < 2; i++)
 		{
-			if (isPut == 1)
+			if (Item1 == PUT)
 			{
 				if (map[boxPosY + i][boxPosX] >= 2 || map[boxPosY][boxPosX] == 1 || map[boxPosY + 1][boxPosX] == 1
 					|| map[boxPosY + 2][boxPosX] == 0 || map[boxPosY + 2][boxPosX] >= 2 || map[boxPosY - 1][boxPosX] != 1)
 				{
-					isPut = 0;
+					Item1 = NONE;
 				}
 			}
 		}
 		for (int i = 0; i < 3; i++)
 		{
-			if (isPut == 2)
+			if (Item2 == PUT)
 			{
 				if (map[boxPosY][boxPosX + i] >= 2 || map[boxPosY][boxPosX - 1] != 1 || map[boxPosY][boxPosX + 3] != 1)
 				{
-					isPut = 0;
+					Item2 = NONE;
 				}
 			}
 		}
@@ -112,23 +84,24 @@ void Item::put(int& cursorX, int& cursorY, int& mouse, int& oldMouse, int map[24
 
 		if (map[boxPosY][boxPosX] <= 1)
 		{
-			if (isPut == 1)
+			if (Item1 == PUT)
 			{
 				for (int i = -1; i < 2; i++)
 				{
 					map[boxPosY + i][boxPosX] = 2;
 				}
+				Item1 = NONE;
 			}
 			if (map[boxPosY][boxPosX] <= 1)
 			{
-				if (isPut == 2)
+				if (Item2 == PUT)
 				{
 					for (int i = 0; i < 3; i++)
 					{
 						map[boxPosY][boxPosX + i] = 3;
 					}
+					Item2 = NONE;
 				}
-				isPut = 0;
 			}
 		}
 	}
@@ -140,23 +113,25 @@ void Item::draw(const int WIN_WIDTH, const int WIN_HEIGHT, int& cursorX, int& cu
 	DrawBox(WIN_WIDTH - 220, 0, WIN_WIDTH, WIN_HEIGHT / 2, GetColor(0, 0, 0), 0);
 	DrawBox(WIN_WIDTH - 220, WIN_HEIGHT / 2, WIN_WIDTH, WIN_HEIGHT, GetColor(255, 255, 255), 1);
 	DrawBox(WIN_WIDTH - 220, WIN_HEIGHT / 2, WIN_WIDTH, WIN_HEIGHT, GetColor(0, 0, 0), 0);
-	if (isSelect == 1)
+	if (Item1 <= CARRY)
 	{
 		DrawBox(WIN_WIDTH - 220, 0, WIN_WIDTH, WIN_HEIGHT / 2, GetColor(255, 255, 0), 1);
 		DrawBox(WIN_WIDTH - 220, 0, WIN_WIDTH, WIN_HEIGHT / 2, GetColor(0, 0, 0), 0);
-	} else if (isSelect == 2)
+	} 
+	else if (Item2 <= CARRY)
 	{
 		DrawBox(WIN_WIDTH - 220, WIN_HEIGHT / 2, WIN_WIDTH, WIN_HEIGHT, GetColor(255, 255, 0), 1);
 		DrawBox(WIN_WIDTH - 220, WIN_HEIGHT / 2, WIN_WIDTH, WIN_HEIGHT, GetColor(0, 0, 0), 0);
 	}
 	DrawBox(0, 768, WIN_WIDTH - 220, WIN_HEIGHT, GetColor(255, 255, 255), 1);
 	DrawBox(0, 768, WIN_WIDTH - 220, WIN_HEIGHT, GetColor(0, 0, 0), 0);
-	if (isCarry == 1)
+	if (Item1 == CARRY)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 120);
 		DrawBox(cursorX - 32, cursorY - 96, cursorX + 31, cursorY + 96, GetColor(255, 0, 0), 1);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 100);
-	} else if (isCarry == 2)
+	} 
+	else if (Item2 == CARRY)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 120);
 		DrawBox(cursorX - 32, cursorY - 32, cursorX + 159, cursorY + 31, GetColor(0, 0, 255), 1);
