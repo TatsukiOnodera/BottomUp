@@ -89,12 +89,16 @@ void Item::put(int& cursorX, int& cursorY, int& mouse, int& oldMouse, int map[24
 
 		for (int i = -1; i < 2; i++)
 		{
-			if (isPut == 1)
+			for (int j = 0; j < 20; j++)
 			{
-				if (map[boxPosY + i][boxPosX] >= 2 || map[boxPosY][boxPosX] == 1 || map[boxPosY + 1][boxPosX] == 1
-					|| map[boxPosY + 2][boxPosX] == 0 || map[boxPosY + 2][boxPosX] >= 2 || map[boxPosY - 1][boxPosX] != 1)
+				if (isPut == 1)
 				{
-					isPut = 0;
+					if (map[boxPosY + i][boxPosX] >= 2 || map[boxPosY][boxPosX] == 1 || map[boxPosY + 1][boxPosX] == 1
+						|| map[boxPosY + 2][boxPosX] == 0 || map[boxPosY + 2][boxPosX] >= 2 || map[boxPosY - 1][boxPosX] != 1
+						|| map[boxPosY + 2][j] == 3)
+					{
+						isPut = 0;
+					}
 				}
 			}
 		}

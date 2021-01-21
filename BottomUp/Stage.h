@@ -21,5 +21,5 @@ public:
 	void setIsChangeStage(int a);
 
 	void scroll();
-	void  draw(int map[24][20]);
+	void  draw(int map[24][20], int &GH1, int &GH2);
 };
