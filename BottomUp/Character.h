@@ -29,7 +29,7 @@ public:
 	int getNext();
 
 	void changeStage(Stage* stage);
-	void move(Stage* stage, int map[24][20]);
+	void move(Stage* stage, int map[96][20]);
 	void collisionPoison();
 	void draw(Stage* stage, int GH1);
 };

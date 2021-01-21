@@ -2,10 +2,10 @@
 
 Stage::Stage()
 {
-	stageStart = -768;
+	stageStart = -5376;
 	mapChipSize = 64;
 	isChangeStage = 0;
-	floor = 2;
+	floor = 8;
 }
 
 int Stage::getStageStart() { return stageStart; }
@@ -21,7 +21,7 @@ void Stage::scroll()
 		stageStart += 37;
 		if (stageStart > (floor - 2) * -768)
 		{
-			stageStart = 0;
+			stageStart = (floor - 2) * -768;
 			isChangeStage = 0;
 			floor -= 1;
 			if (floor < 2)
@@ -32,9 +32,9 @@ void Stage::scroll()
 	}
 }
 
-void Stage::draw(int map[24][20], int& GH1, int& GH2)
+void Stage::draw(int map[96][20], int GH1, int GH2, int GH3)
 {
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		if (i % 1 == 0)
 		{
@@ -44,8 +44,12 @@ void Stage::draw(int map[24][20], int& GH1, int& GH2)
 		{
 			DrawGraph(0, (i + stageStart) + i * 768, GH2, 1);
 		}
+		else if (i % 2 == 0)
+		{
+			DrawGraph(0, (i + stageStart) + i * 768, GH3, 1);
+		}
 	}
-	for (int y = 0; y < 24; y++)
+	for (int y = 0; y < 96; y++)
 	{
 		for (int x = 0; x < 20; x++)
 		{

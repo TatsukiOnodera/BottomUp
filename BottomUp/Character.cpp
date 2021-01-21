@@ -32,7 +32,7 @@ void Character::changeStage(Stage* stage)
 	}
 }
 
-void Character::move(Stage* stage, int map[24][20])
+void Character::move(Stage* stage, int map[96][20])
 {
 	if (isDead == 0 && stage->getIsChangeStage() == 0)
 	{

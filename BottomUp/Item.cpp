@@ -63,7 +63,7 @@ void Item::carry(int& mouse, int& oldMouse)
 	}
 }
 
-void Item::put(int& cursorX, int& cursorY, int& mouse, int& oldMouse, int map[24][20], Stage* stage)
+void Item::put(int& cursorX, int& cursorY, int& mouse, int& oldMouse, int map[96][20], Stage* stage)
 {
 	boxPosX = cursorX / 64;
 	boxPosY = (cursorY - stage->getStageStart()) / 64;
