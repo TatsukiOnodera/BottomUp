@@ -7,12 +7,7 @@ class Item
 private:
 	int boxPosX;
 	int boxPosY;
-	int Item1;
-	int Item2;
-	enum status
-	{
-		NONE, SELECT, CARRY, PUT
-	};
+	int is
 
 public:
 	Item();

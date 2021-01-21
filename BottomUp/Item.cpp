@@ -4,8 +4,8 @@ Item::Item()
 {
 	boxPosX = 0;
 	boxPosY = 0;
-	Item1 = 0;
-	Item2 = 0;
+
+	enum status Item1;
 }
 
 void Item::select(int& cursorX, int& cursorY, const int WIN_WIDTH, const int WIN_HEIGHT)

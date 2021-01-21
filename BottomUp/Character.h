@@ -31,5 +31,5 @@ public:
 	void changeStage(Stage* stage);
 	void move(Stage* stage, int map[24][20]);
 	void collisionPoison();
-	void draw(Stage* stage);
+	void draw(Stage* stage, int &GH1);
 };

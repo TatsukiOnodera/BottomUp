@@ -158,12 +158,11 @@ void Character::collisionPoison()
 	}
 }
 
-void Character::draw(Stage* stage)
+void Character::draw(Stage* stage ,int& GH1)
 {
 	if (isAnimation == STAND)
 	{
-		DrawBox(posX - 32, posY - 32, posX + 32, posY + 96, GetColor(0, 180, 100), 1);
-		DrawBox(posX - 32, posY - 32, posX + 32, posY + 96, GetColor(255, 255, 255), 0);
+		DrawGraph(posX - 32, posY - 32, GH1, 1);
 	}
 	if (isAnimation == WALK)
 	{

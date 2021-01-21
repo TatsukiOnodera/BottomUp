@@ -29,7 +29,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	SetDrawScreen(DX_SCREEN_BACK);
 
 	//画像などのリソースデータの変数宣言と読み込み
-	int graphHandle[3] = { 0 };
+	int graphHandle[4];
+	graphHandle[0] = LoadGraph("back1.png");
+	graphHandle[1] = LoadGraph("back2.png");
+	graphHandle[2] = LoadGraph("back3.png");
+	graphHandle[3] = LoadGraph("caracter(stand).png");
 
 	//ゲームループで使う変数の宣言
 	char keys[256] = { 0 }; //最新のキーボード情報用
@@ -171,9 +175,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		}
 		if (isGame == 1)
 		{
-			stage->draw(map);
+			stage->draw(map, graphHandle[0], graphHandle[1], graphHandle[2]);
 			item->draw(WIN_WIDTH, WIN_HEIGHT, cursorX, cursorY);
-			character->draw(stage);
+			character->draw(stage, graphHandle[3]);
 		}
 		if (isGameClear == 1)
 		{
