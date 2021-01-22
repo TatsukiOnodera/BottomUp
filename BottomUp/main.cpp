@@ -4,7 +4,7 @@
 #include "Stage.h"
 #include "Poison.h"
 
-const char TITLE[] = "Bottom Up (α)";
+const char TITLE[] = "Bottom Up";
 
 const int WIN_WIDTH = 1500; //ウィンドウ横幅
 const int WIN_HEIGHT = 844;//ウィンドウ縦幅
@@ -17,7 +17,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	SetWindowSizeChangeEnableFlag(FALSE, FALSE);
 	SetMainWindowText(TITLE);					// タイトルを変更
 	SetGraphMode(WIN_WIDTH, WIN_HEIGHT, 32);	//画面サイズの最大サイズ、カラービット数を設定（モニターの解像度に合わせる）
-	SetWindowSizeExtendRate(0.8);				//画面サイズを設定（解像度との比率で設定）
+	SetWindowSizeExtendRate(0.9);				//画面サイズを設定（解像度との比率で設定）
 	SetBackgroundColor(150, 150, 150);		// 画面の背景色を設定する
 	//ChangeWindowMode(1);		//フルスクリーン
 	SetMouseDispFlag(TRUE);				//マウス表示

@@ -186,7 +186,7 @@ void Character::move(Stage* stage, int map[96][20])
 
 void Character::collisionPoison(int& isGameOver)
 {
-	if (posY - 32 <= 0)
+	if (posY - 32 < 0)
 	{
 		isDead = 1;
 		isAnimation = DEAD;

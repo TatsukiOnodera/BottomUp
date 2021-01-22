@@ -42,17 +42,17 @@ void Stage::scroll()
 
 void Stage::draw(int map[96][20], int GH1, int GH2, int GH3)
 {
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 8; i++)
 	{
-		if (i % 1 == 0)
+		if (i % 3 == 2)
 		{
 			DrawGraph(0, (i + stageStart) + i * 768, GH1, 1);
 		}
-		else if (i % 1 == 1)
+		else if (i % 3 == 0)
 		{
 			DrawGraph(0, (i + stageStart) + i * 768, GH2, 1);
 		}
-		else if (i % 2 == 0)
+		else if (i % 3 == 1)
 		{
 			DrawGraph(0, (i + stageStart) + i * 768, GH3, 1);
 		}
