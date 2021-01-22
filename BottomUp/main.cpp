@@ -211,6 +211,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			character->reset();
 			item->reset();
 			stage->reset();
+			count = 0;
 			if (mouse == 1 && oldMouse == 0)
 			{
 				isGameClear = 0;
@@ -222,6 +223,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			character->reset();
 			item->reset();
 			stage->reset();
+			count = 0;
 			if (mouse == 1 && oldMouse == 0)
 			{
 				isGameOver = 0;
