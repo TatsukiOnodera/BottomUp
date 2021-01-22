@@ -15,6 +15,7 @@ private:
 	int isAnimation;
 	int animationCount;
 	int animationPoint;
+	int animationEnd;
 	int direction;
 	int count;
 	enum animtion

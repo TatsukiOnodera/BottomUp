@@ -12,6 +12,7 @@ Character::Character()
 	isAnimation = 0;
 	animationCount = 0;
 	animationPoint = 0;
+	animationEnd = 0;
 	direction = 1;
 	count = 0;
 }
@@ -183,11 +184,17 @@ void Character::move(Stage* stage, int map[96][20])
 	}
 }
 
-void Character::collisionPoison(int& gameOver)
+void Character::collisionPoison(int& isGameOver)
 {
-	if (isDead == 1)
+	if (posY - 32 <= 0)
 	{
-		isAnimation = 4;
+		isDead = 1;
+		isAnimation = DEAD;
+		if (animationEnd == 1)
+		{
+			animationEnd = 0;
+			isGameOver = 1;
+		}
 	}
 }
 
@@ -244,5 +251,6 @@ void Character::draw(Stage* stage, int GH1, int GH2)
 	{
 		DrawBox(posX - 32, posY - 32, posX + 32, posY + 96, GetColor(0, 180, 100), 1);
 		DrawBox(posX - 32, posY - 32, posX + 32, posY + 96, GetColor(255, 255, 255), 0);
+		animationEnd = 0;
 	}
 }
