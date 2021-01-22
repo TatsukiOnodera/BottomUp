@@ -14,6 +14,7 @@ private:
 public:
 	Item();
 
+	void reset();
 	void select(int& cursorX, int& cursorY, const int WIN_WIDTH, const int WIN_HEIGHT);
 	void carry(int& mouse, int& oldMouse);
 	void put(int& cursorX, int& cursorY, int& mouse, int& oldMouse, int map[96][20], Stage* stage);

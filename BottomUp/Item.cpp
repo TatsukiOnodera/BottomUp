@@ -9,6 +9,15 @@ Item::Item()
 	isPut = 0;
 }
 
+void Item::reset()
+{
+	boxPosX = 0;
+	boxPosY = 0;
+	isSelect = 0;
+	isCarry = 0;
+	isPut = 0;
+}
+
 void Item::select(int& cursorX, int& cursorY, const int WIN_WIDTH, const int WIN_HEIGHT)
 {
 	if (cursorX >= WIN_WIDTH - 220)

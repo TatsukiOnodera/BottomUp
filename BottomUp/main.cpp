@@ -29,11 +29,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	SetDrawScreen(DX_SCREEN_BACK);
 
 	//画像などのリソースデータの変数宣言と読み込み
-	int graphHandle[4];
+	int graphHandle[5];
 	graphHandle[0] = LoadGraph("back1.png");
 	graphHandle[1] = LoadGraph("back2.png");
 	graphHandle[2] = LoadGraph("back3.png");
 	graphHandle[3] = LoadGraph("characterStand.png");
+	graphHandle[4] = LoadGraph("characterWalk.png");
 
 	//ゲームループで使う変数の宣言
 	char keys[256] = { 0 }; //最新のキーボード情報用
@@ -207,6 +208,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		}
 		if (isGameClear == 1)
 		{
+			character->reset();
+			item->reset();
+			stage->reset();
 			if (mouse == 1 && oldMouse == 0)
 			{
 				isGameClear = 0;
@@ -215,6 +219,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		}
 		if (isGameOver == 1)
 		{
+			character->reset();
+			item->reset();
+			stage->reset();
 			if (mouse == 1 && oldMouse == 0)
 			{
 				isGameOver = 0;
@@ -229,11 +236,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			character->move(stage, map);
 			character->changeStage(stage);
 			stage->scroll();
-
-			if (character->getNext() == 1)
-			{
-				isGameClear = 1;
-			}
+			character->clear(isGameClear, stage);
 		}
 
 		//描画処理
@@ -249,7 +252,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		{
 			stage->draw(map, graphHandle[0], graphHandle[1], graphHandle[2]);
 			item->draw(WIN_WIDTH, WIN_HEIGHT, cursorX, cursorY);
-			character->draw(stage, graphHandle[3]);
+			character->draw(stage, graphHandle[3], graphHandle[4]);
 		}
 		if (isGameClear == 1)
 		{

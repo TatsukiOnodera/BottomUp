@@ -14,6 +14,14 @@ int Stage::getIsChangeStage() { return isChangeStage; }
 
 void Stage::setIsChangeStage(int a) { isChangeStage = a; }
 
+void Stage::reset()
+{
+	stageStart = -5376;
+	mapChipSize = 64;
+	isChangeStage = 0;
+	floor = 8;
+}
+
 void Stage::scroll()
 {
 	if (isChangeStage == 1)

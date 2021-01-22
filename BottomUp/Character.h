@@ -13,10 +13,10 @@ private:
 	int isClimb;
 	int isDead;
 	int isAnimation;
-	int isAnimationEnd;
-	int animationSpeed;
+	int animationCount;
+	int animationPoint;
+	int direction;
 	int count;
-	int next;
 	enum animtion
 	{
 		STAND, WALK, CLIMB, DEAD
@@ -25,11 +25,10 @@ private:
 public:
 	Character();
 
-	int getIsDead();
-	int getNext();
-
+	void reset();
+	void clear(int &isGameClear, Stage* stage);
 	void changeStage(Stage* stage);
 	void move(Stage* stage, int map[96][20]);
-	void collisionPoison();
-	void draw(Stage* stage, int GH1);
+	void collisionPoison(int &isGameover);
+	void draw(Stage* stage, int GH1, int GH2);
 };
