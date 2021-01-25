@@ -33,11 +33,19 @@ void Character::reset()
 	count = 0;
 }
 
-void Character::clear(int& isGameClear, Stage* stage)
+void Character::clear(int& isGameClear, Stage* stage, int SH1, int SH2)
 {
 	if (stage->getStageStart() == 0 && posY <= -96)
 	{
 		isGameClear = 1;
+		if (CheckSoundMem(SH1) == 1)
+		{
+			StopSoundMem(SH1);
+		}
+		if (CheckSoundMem(SH2) == 1)
+		{
+			StopSoundMem(SH2);
+		}
 	}
 }
 
@@ -198,7 +206,7 @@ void Character::collisionPoison(int& isGameOver)
 	}
 }
 
-void Character::draw(Stage* stage, int GH1, int GH2)
+void Character::draw(Stage* stage, int GH1, int GH2, int SH1, int SH2)
 {
 	if (isAnimation == STAND)
 	{
@@ -209,6 +217,14 @@ void Character::draw(Stage* stage, int GH1, int GH2)
 		if (direction == 1)
 		{
 			DrawTurnGraph(posX - 32, posY - 32, GH1, 1);
+		}
+		if (CheckSoundMem(SH1) == 1)
+		{
+			StopSoundMem(SH1);
+		}
+		if (CheckSoundMem(SH2) == 1)
+		{
+			StopSoundMem(SH2);
 		}
 	}
 	if (isAnimation == WALK)
@@ -241,16 +257,40 @@ void Character::draw(Stage* stage, int GH1, int GH2)
 			DrawRectGraph(posX - 32, posY - 32, animationPoint * 64, 0, 64, 128, GH2, 1, 1);
 			animationCount++;
 		}
+		if (CheckSoundMem(SH1) == 0)
+		{
+			PlaySoundMem(SH1, DX_PLAYTYPE_LOOP, 1);
+		}
+		if (CheckSoundMem(SH1) == 1)
+		{
+			StopSoundMem(SH2);
+		}
 	}
 	if (isAnimation == CLIMB)
 	{
 		DrawBox(posX - 32, posY - 32, posX + 32, posY + 96, GetColor(0, 180, 100), 1);
 		DrawBox(posX - 32, posY - 32, posX + 32, posY + 96, GetColor(255, 255, 255), 0);
+		if (CheckSoundMem(SH1) == 0)
+		{
+			PlaySoundMem(SH1, DX_PLAYTYPE_LOOP, 1);
+		}
+		if (CheckSoundMem(SH1) == 1)
+		{
+			StopSoundMem(SH2);
+		}
 	}
 	if (isAnimation == DEAD)
 	{
 		DrawBox(posX - 32, posY - 32, posX + 32, posY + 96, GetColor(0, 180, 100), 1);
 		DrawBox(posX - 32, posY - 32, posX + 32, posY + 96, GetColor(255, 255, 255), 0);
 		animationEnd = 0;
+		if (CheckSoundMem(SH2) == 0)
+		{
+			PlaySoundMem(SH2, DX_PLAYTYPE_LOOP, 1);
+		}
+		if (CheckSoundMem(SH2) == 1)
+		{
+			StopSoundMem(SH1);
+		}
 	}
 }

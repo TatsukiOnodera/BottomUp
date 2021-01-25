@@ -7,7 +7,7 @@
 const char TITLE[] = "Bottom Up";
 
 const int WIN_WIDTH = 1500; //ウィンドウ横幅
-const int WIN_HEIGHT = 844;//ウィンドウ縦幅
+const int WIN_HEIGHT = 844; //ウィンドウ縦幅
 
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
@@ -17,8 +17,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	SetWindowSizeChangeEnableFlag(FALSE, FALSE);
 	SetMainWindowText(TITLE);					// タイトルを変更
 	SetGraphMode(WIN_WIDTH, WIN_HEIGHT, 32);	//画面サイズの最大サイズ、カラービット数を設定（モニターの解像度に合わせる）
-	SetWindowSizeExtendRate(0.9);				//画面サイズを設定（解像度との比率で設定）
-	SetBackgroundColor(150, 150, 150);		// 画面の背景色を設定する
+	SetWindowSizeExtendRate(0.8);				//画面サイズを設定（解像度との比率で設定）
+	SetBackgroundColor(0, 0, 255);		// 画面の背景色を設定する
 	//ChangeWindowMode(1);		//フルスクリーン
 	SetMouseDispFlag(TRUE);				//マウス表示
 
@@ -29,6 +29,17 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	SetDrawScreen(DX_SCREEN_BACK);
 
 	//画像などのリソースデータの変数宣言と読み込み
+	int soundHandle[9];
+	soundHandle[0] = LoadSoundMem("スタートBGM.mp3");
+	soundHandle[1] = LoadSoundMem("ステージBGM.mp3");
+	soundHandle[2] = LoadSoundMem("セレクトSE.mp3");
+	soundHandle[3] = LoadSoundMem("梯子を上がる.mp3");
+	soundHandle[4] = LoadSoundMem("革靴で走る.mp3");
+	soundHandle[5] = LoadSoundMem("警報が鳴る.mp3");
+	soundHandle[6] = LoadSoundMem("「きゃああーー！」.mp3");
+	soundHandle[7] = LoadSoundMem("ゲームクリアBGM.mp3");
+	soundHandle[8] = LoadSoundMem("ゲームオーバーBGM.mp3");
+
 	int graphHandle[5];
 	graphHandle[0] = LoadGraph("back1.png");
 	graphHandle[1] = LoadGraph("back2.png");
@@ -155,6 +166,16 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	Stage* stage = new Stage;
 	Poison* poison = new Poison;
 
+	ChangeVolumeSoundMem(100, soundHandle[0]);
+	ChangeVolumeSoundMem(100, soundHandle[1]);
+	ChangeVolumeSoundMem(100, soundHandle[2]);
+	ChangeVolumeSoundMem(255, soundHandle[3]);
+	ChangeVolumeSoundMem(255, soundHandle[4]);
+	ChangeVolumeSoundMem(100, soundHandle[5]);
+	ChangeVolumeSoundMem(255, soundHandle[6]);
+	ChangeVolumeSoundMem(100, soundHandle[7]);
+	ChangeVolumeSoundMem(100, soundHandle[8]);
+
 	// ゲームループ
 	while (1)
 	{
@@ -243,13 +264,58 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		}
 
 		//更新処理
+		if (isStart == 1 || isOperation == 1)
+		{
+			if (CheckSoundMem(soundHandle[0]) == 0)
+			{
+				PlaySoundMem(soundHandle[0], DX_PLAYTYPE_BACK, 1);
+			}
+			if (CheckSoundMem(soundHandle[0]) == 1)
+			{
+				StopSoundMem(soundHandle[7]);
+			}
+			if (CheckSoundMem(soundHandle[0]) == 1)
+			{
+				StopSoundMem(soundHandle[8]);
+			}
+		}
 		if (isGame == 1)
 		{
+			if (CheckSoundMem(soundHandle[1]) == 0)
+			{
+				PlaySoundMem(soundHandle[1], DX_PLAYTYPE_BACK, 1);
+			}
+			if (CheckSoundMem(soundHandle[1]) == 1)
+			{
+				StopSoundMem(soundHandle[0]);
+			}
 			item->select(cursorX, cursorY, WIN_WIDTH, WIN_HEIGHT);
 			character->move(stage, map);
 			character->changeStage(stage);
 			stage->scroll();
-			character->clear(isGameClear, stage);
+			character->clear(isGameClear, stage, soundHandle[4], soundHandle[6]);
+		}
+		if (isGameClear == 1)
+		{
+			if (CheckSoundMem(soundHandle[7]) == 0)
+			{
+				PlaySoundMem(soundHandle[7], DX_PLAYTYPE_BACK, 1);
+			}
+			if (CheckSoundMem(soundHandle[7]) == 1)
+			{
+				StopSoundMem(soundHandle[1]);
+			}
+		}
+		if (isGameOver == 1)
+		{
+			if (CheckSoundMem(soundHandle[8]) == 0)
+			{
+				PlaySoundMem(soundHandle[8], DX_PLAYTYPE_BACK, 1);
+			}
+			if (CheckSoundMem(soundHandle[8]) == 1)
+			{
+				StopSoundMem(soundHandle[1]);
+			}
 		}
 
 		//描画処理
@@ -265,7 +331,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		{
 			stage->draw(map, graphHandle[0], graphHandle[1], graphHandle[2]);
 			item->draw(WIN_WIDTH, WIN_HEIGHT, cursorX, cursorY);
-			character->draw(stage, graphHandle[3], graphHandle[4]);
+			character->draw(stage, graphHandle[3], graphHandle[4], soundHandle[4], soundHandle[6]);
 		}
 		if (isGameClear == 1)
 		{

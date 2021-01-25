@@ -27,9 +27,9 @@ public:
 	Character();
 
 	void reset();
-	void clear(int &isGameClear, Stage* stage);
+	void clear(int &isGameClear, Stage* stage, int SH1, int SH2);
 	void changeStage(Stage* stage);
 	void move(Stage* stage, int map[96][20]);
 	void collisionPoison(int &isGameover);
-	void draw(Stage* stage, int GH1, int GH2);
+	void draw(Stage* stage, int GH1, int GH2, int SH1, int SH2);
 };
