@@ -51,6 +51,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	int isGameClear = 0;
 	int isGameOver = 0;
 	int count = 0;
+	int alpha = 255;
 
 	int map[96][20] = { {1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}
 										,{1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}
@@ -211,24 +212,34 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			character->reset();
 			item->reset();
 			stage->reset();
-			count = 0;
-			if (mouse == 1 && oldMouse == 0)
+			if (count >= 2)
 			{
-				isGameClear = 0;
-				isStart = 1;
+				if (mouse == 1 && oldMouse == 0)
+				{
+					isGameClear = 0;
+					isStart = 1;
+					count = 0;
+					alpha = 255;
+				}
 			}
+			count++;
 		}
 		if (isGameOver == 1)
 		{
 			character->reset();
 			item->reset();
 			stage->reset();
-			count = 0;
-			if (mouse == 1 && oldMouse == 0)
+			if (count >= 2)
 			{
-				isGameOver = 0;
-				isStart = 1;
+				if (mouse == 1 && oldMouse == 0)
+				{
+					isGameOver = 0;
+					isStart = 1;
+					count = 0;
+					alpha = 255;
+				}
 			}
+			count++;
 		}
 
 		//更新処理
@@ -258,11 +269,27 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		}
 		if (isGameClear == 1)
 		{
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 			DrawBox(0, 0, 1500, 844, GetColor(255, 255, 255), 1);
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, alpha);
+			DrawBox(0, 0, 1500, 844, GetColor(255, 255, 255), 1);
+			alpha -= 15;
+			if (alpha < 0)
+			{
+				alpha = 0;
+			}
 		}
 		if (isGameOver == 1)
 		{
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
+			DrawBox(0, 0, 1500, 844, GetColor(0, 0, 0), 1);
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, alpha);
 			DrawBox(0, 0, 1500, 844, GetColor(255, 255, 0), 1);
+			alpha -= 15;
+			if (alpha < 0)
+			{
+				alpha = 0;
+			}
 		}
 
 		//---------  ここまでにプログラムを記述  ---------//
