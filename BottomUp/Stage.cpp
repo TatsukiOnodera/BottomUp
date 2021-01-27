@@ -12,6 +12,8 @@ int Stage::getStageStart() { return stageStart; }
 
 int Stage::getIsChangeStage() { return isChangeStage; }
 
+int Stage::getFloor() { return floor; }
+
 void Stage::setIsChangeStage(int a) { isChangeStage = a; }
 
 void Stage::reset()
@@ -40,7 +42,7 @@ void Stage::scroll()
 	}
 }
 
-void Stage::draw(int map[96][20], int GH1, int GH2, int GH3)
+void Stage::draw(int map[96][20], int GH1, int GH2, int GH3, int GH4, int GH5, int GH7)
 {
 	for (int i = 0; i < 8; i++)
 	{
@@ -63,18 +65,20 @@ void Stage::draw(int map[96][20], int GH1, int GH2, int GH3)
 		{
 			if (map[y][x] == BLOCK)
 			{
-				DrawBox(x * 64, (y + stageStart) + y * (mapChipSize - 1), x * 64 + 64, (y + stageStart) + y * (mapChipSize - 1) + 64, GetColor(50, 50, 50), 1);
-				DrawBox(x * 64, (y + stageStart) + y * (mapChipSize - 1), x * 64 + 64, (y + stageStart) + y * (mapChipSize - 1) + 64, GetColor(255, 255, 255), 0);
+				DrawGraph(x * 64, (y + stageStart) + y * (mapChipSize - 1), GH4, 1);
 			}
 			if (map[y][x] == ITEM1)
 			{
-				DrawBox(x * 64, (y + stageStart) + y * (mapChipSize - 1), x * 64 + 64, (y + stageStart) + y * (mapChipSize - 1) + 64, GetColor(255, 0, 0), 1);
-				DrawBox(x * 64, (y + stageStart) + y * (mapChipSize - 1), x * 64 + 64, (y + stageStart) + y * (mapChipSize - 1) + 64, GetColor(255, 255, 255), 0);
+				DrawGraph(x * 64, (y + stageStart) + y * (mapChipSize - 1), GH5, 1);
 			}
 			if (map[y][x] == ITEM2)
 			{
 				DrawBox(x * 64, (y + stageStart) + y * (mapChipSize - 1), x * 64 + 64, (y + stageStart) + y * (mapChipSize - 1) + 64, GetColor(0, 0, 255), 1);
 				DrawBox(x * 64, (y + stageStart) + y * (mapChipSize - 1), x * 64 + 64, (y + stageStart) + y * (mapChipSize - 1) + 64, GetColor(255, 255, 255), 0);
+			}
+			if (map[y][x] == WALL)
+			{
+				DrawGraph(x * 64, (y + stageStart) + y * (mapChipSize - 1), GH7, 1);
 			}
 		}
 	}

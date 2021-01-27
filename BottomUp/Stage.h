@@ -10,7 +10,7 @@ private:
 	int floor;
 	enum resource
 	{
-		NONE, BLOCK, ITEM1, ITEM2
+		NONE, BLOCK, ITEM1, ITEM2, WALL
 	};
 
 public:
@@ -18,9 +18,10 @@ public:
 
 	int getStageStart();
 	int getIsChangeStage();
+	int getFloor();
 	void setIsChangeStage(int a);
 
 	void reset();
 	void scroll();
-	void  draw(int map[96][20], int GH1, int GH2, int GH3);
+	void  draw(int map[96][20], int GH1, int GH2, int GH3, int GH4, int GH5, int GH7);
 };

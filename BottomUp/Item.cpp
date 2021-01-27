@@ -72,7 +72,7 @@ void Item::carry(int& mouse, int& oldMouse)
 	}
 }
 
-void Item::put(int& cursorX, int& cursorY, int& mouse, int& oldMouse, int map[96][20], Stage* stage)
+void Item::put(int& cursorX, int& cursorY, int& mouse, int& oldMouse, int map[96][20], Stage* stage, int SH1)
 {
 	boxPosX = cursorX / 64;
 	boxPosY = (cursorY - stage->getStageStart()) / 64;
@@ -130,6 +130,10 @@ void Item::put(int& cursorX, int& cursorY, int& mouse, int& oldMouse, int map[96
 				for (int i = -1; i < 2; i++)
 				{
 					map[boxPosY + i][boxPosX] = 2;
+				}
+				if (CheckSoundMem(SH1) == 0)
+				{
+					PlaySoundMem(SH1, DX_PLAYTYPE_BACK, 1);
 				}
 			}
 			if (map[boxPosY][boxPosX] <= 1)

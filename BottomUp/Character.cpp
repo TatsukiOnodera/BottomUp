@@ -15,6 +15,7 @@ Character::Character()
 	animationEnd = 0;
 	direction = 1;
 	count = 0;
+	musicCount = 0;
 }
 
 void Character::reset()
@@ -31,6 +32,7 @@ void Character::reset()
 	animationPoint = 0;
 	direction = 1;
 	count = 0;
+	musicCount = 0;
 }
 
 void Character::clear(int& isGameClear, Stage* stage, int SH1, int SH2)
@@ -38,14 +40,7 @@ void Character::clear(int& isGameClear, Stage* stage, int SH1, int SH2)
 	if (stage->getStageStart() == 0 && posY <= -96)
 	{
 		isGameClear = 1;
-		if (CheckSoundMem(SH1) == 1)
-		{
-			StopSoundMem(SH1);
-		}
-		if (CheckSoundMem(SH2) == 1)
-		{
-			StopSoundMem(SH2);
-		}
+		musicCount = 1;
 	}
 }
 
@@ -192,16 +187,17 @@ void Character::move(Stage* stage, int map[96][20])
 	}
 }
 
-void Character::collisionPoison(int& isGameOver)
+void Character::collisionPoison(int& isGameOver, Poison* poison)
 {
-	if (posY - 32 < 0)
+	if ((posY - 20) > poison->getPosY())
 	{
 		isDead = 1;
 		isAnimation = DEAD;
 		if (animationEnd == 1)
 		{
-			animationEnd = 0;
+			isAnimation = STAND;
 			isGameOver = 1;
+			animationEnd = 0;
 		}
 	}
 }
@@ -259,7 +255,7 @@ void Character::draw(Stage* stage, int GH1, int GH2, int SH1, int SH2)
 		}
 		if (CheckSoundMem(SH1) == 0)
 		{
-			PlaySoundMem(SH1, DX_PLAYTYPE_LOOP, 1);
+			PlaySoundMem(SH1, DX_PLAYTYPE_BACK, 1);
 		}
 		if (CheckSoundMem(SH1) == 1)
 		{
@@ -272,7 +268,7 @@ void Character::draw(Stage* stage, int GH1, int GH2, int SH1, int SH2)
 		DrawBox(posX - 32, posY - 32, posX + 32, posY + 96, GetColor(255, 255, 255), 0);
 		if (CheckSoundMem(SH1) == 0)
 		{
-			PlaySoundMem(SH1, DX_PLAYTYPE_LOOP, 1);
+			PlaySoundMem(SH1, DX_PLAYTYPE_BACK, 1);
 		}
 		if (CheckSoundMem(SH1) == 1)
 		{
@@ -283,14 +279,25 @@ void Character::draw(Stage* stage, int GH1, int GH2, int SH1, int SH2)
 	{
 		DrawBox(posX - 32, posY - 32, posX + 32, posY + 96, GetColor(0, 180, 100), 1);
 		DrawBox(posX - 32, posY - 32, posX + 32, posY + 96, GetColor(255, 255, 255), 0);
-		animationEnd = 0;
-		if (CheckSoundMem(SH2) == 0)
+		/*if (musicCount == 0)
 		{
-			PlaySoundMem(SH2, DX_PLAYTYPE_LOOP, 1);
+			if (CheckSoundMem(SH2) == 0)
+			{
+				PlaySoundMem(SH2, DX_PLAYTYPE_BACK, 1);
+				musicCount++;
+			}
+		}
+		else
+		{
+			if (CheckSoundMem(SH2) == 1)
+			{
+				StopSoundMem(SH2);
+			}
+			animationEnd = 1;
 		}
 		if (CheckSoundMem(SH2) == 1)
 		{
 			StopSoundMem(SH1);
-		}
+		}*/
 	}
 }
