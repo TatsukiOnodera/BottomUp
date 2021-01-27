@@ -189,7 +189,7 @@ void Character::move(Stage* stage, int map[96][20])
 
 void Character::collisionPoison(int& isGameOver, Poison* poison)
 {
-	if ((posY - 20) > poison->getPosY())
+	if ((posY - 20) > poison->getCollisionY())
 	{
 		isDead = 1;
 		isAnimation = DEAD;
@@ -202,7 +202,7 @@ void Character::collisionPoison(int& isGameOver, Poison* poison)
 	}
 }
 
-void Character::draw(Stage* stage, int GH1, int GH2, int SH1, int SH2)
+void Character::draw(Stage* stage, int GH1, int GH2, int GH3, int SH1, int SH2)
 {
 	if (isAnimation == STAND)
 	{
@@ -264,8 +264,19 @@ void Character::draw(Stage* stage, int GH1, int GH2, int SH1, int SH2)
 	}
 	if (isAnimation == CLIMB)
 	{
-		DrawBox(posX - 32, posY - 32, posX + 32, posY + 96, GetColor(0, 180, 100), 1);
-		DrawBox(posX - 32, posY - 32, posX + 32, posY + 96, GetColor(255, 255, 255), 0);
+		if (animationCount >= 1)
+		{
+			animationCount = 0;
+			animationPoint++;
+			if (animationPoint >= 11)
+			{
+				animationPoint = 0;
+			}
+		}
+		/*DrawBox(posX - 32, posY - 32, posX + 32, posY + 96, GetColor(0, 180, 100), 1);
+		DrawBox(posX - 32, posY - 32, posX + 32, posY + 96, GetColor(255, 255, 255), 0);*/
+		DrawRectGraph(posX - 32, posY - 32, animationPoint * 64, 0, 64, 128, GH3, 1, 0);
+		animationCount++;
 		if (CheckSoundMem(SH1) == 0)
 		{
 			PlaySoundMem(SH1, DX_PLAYTYPE_BACK, 1);

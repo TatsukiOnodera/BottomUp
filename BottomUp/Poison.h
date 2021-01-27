@@ -4,13 +4,15 @@
 class Poison{
 private:
 	int posY;
+	int collisionY;
 	int count;
 
 public:
 	Poison();
 
-	int getPosY();
+	int getCollisionY();
 
+	void reset();
 	void move(Stage* stage);
 	void draw(Stage *stage);
 };

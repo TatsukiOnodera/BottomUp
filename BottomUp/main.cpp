@@ -245,6 +245,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			character->reset();
 			item->reset();
 			stage->reset();
+			poison->reset();
 			if (count >= 2)
 			{
 				if (mouse == 1 && oldMouse == 0)
@@ -266,6 +267,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			character->reset();
 			item->reset();
 			stage->reset();
+			poison->reset();
 			if (count >= 2)
 			{
 				if (mouse == 1 && oldMouse == 0)
@@ -352,7 +354,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		if (isGame == 1)
 		{
 			stage->draw(map, graphHandle[0], graphHandle[1], graphHandle[2], graphHandle[6], graphHandle[7], graphHandle[8]);
-			character->draw(stage, graphHandle[3], graphHandle[4], soundHandle[4], soundHandle[6]);
+			character->draw(stage, graphHandle[3], graphHandle[4], graphHandle[5], soundHandle[4], soundHandle[6]);
 			poison->draw(stage);
 			item->draw(WIN_WIDTH, WIN_HEIGHT, cursorX, cursorY);
 		}

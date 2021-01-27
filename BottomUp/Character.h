@@ -33,5 +33,5 @@ public:
 	void changeStage(Stage* stage);
 	void move(Stage* stage, int map[96][20]);
 	void collisionPoison(int &isGameover, Poison *poison);
-	void draw(Stage* stage, int GH1, int GH2, int SH1, int SH2);
+	void draw(Stage* stage, int GH1, int GH2, int GH3, int SH1, int SH2);
 };
