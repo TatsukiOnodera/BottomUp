@@ -42,7 +42,7 @@ void Stage::scroll()
 	}
 }
 
-void Stage::draw(int map[96][20], int GH1, int GH2, int GH3, int GH4, int GH5, int GH7)
+void Stage::draw(int map[96][20], int GH1, int GH2, int GH3, int GH4, int GH5, int GH6, int GH7)
 {
 	for (int i = 0; i < 8; i++)
 	{
@@ -73,8 +73,7 @@ void Stage::draw(int map[96][20], int GH1, int GH2, int GH3, int GH4, int GH5, i
 			}
 			if (map[y][x] == ITEM2)
 			{
-				DrawBox(x * 64, (y + stageStart) + y * (mapChipSize - 1), x * 64 + 64, (y + stageStart) + y * (mapChipSize - 1) + 64, GetColor(0, 0, 255), 1);
-				DrawBox(x * 64, (y + stageStart) + y * (mapChipSize - 1), x * 64 + 64, (y + stageStart) + y * (mapChipSize - 1) + 64, GetColor(255, 255, 255), 0);
+				DrawGraph(x * 64, (y + stageStart) + y * (mapChipSize - 1), GH6, 1);
 			}
 			if (map[y][x] == WALL)
 			{

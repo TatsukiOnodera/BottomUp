@@ -6,6 +6,8 @@ private:
 	int posY;
 	int collisionY;
 	int count;
+	int animationNumber;
+	int animationCount;
 
 public:
 	Poison();
@@ -14,5 +16,5 @@ public:
 
 	void reset();
 	void move(Stage* stage);
-	void draw(Stage *stage);
+	void draw(Stage *stage, int GH1);
 };

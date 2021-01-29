@@ -115,7 +115,7 @@ void Item::put(int& cursorX, int& cursorY, int& mouse, int& oldMouse, int map[96
 		{
 			if (isPut == 2)
 			{
-				if (map[boxPosY][boxPosX + i] >= 2 || map[boxPosY][boxPosX - 1] != 1 || map[boxPosY][boxPosX + 3] != 1)
+				if (map[boxPosY][boxPosX + i] >= 2 || map[boxPosY][boxPosX - 1] == 0 || map[boxPosY][boxPosX + 3] == 0)
 				{
 					isPut = 0;
 				}

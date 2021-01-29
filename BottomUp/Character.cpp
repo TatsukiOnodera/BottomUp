@@ -15,7 +15,7 @@ Character::Character()
 	animationEnd = 0;
 	direction = 1;
 	count = 0;
-	musicCount = 0;
+	musicCount = 1;
 }
 
 void Character::reset()
@@ -32,15 +32,15 @@ void Character::reset()
 	animationPoint = 0;
 	direction = 1;
 	count = 0;
-	musicCount = 0;
+	musicCount = 1;
 }
 
 void Character::clear(int& isGameClear, Stage* stage, int SH1, int SH2)
 {
-	if (stage->getStageStart() == 0 && posY <= -96)
+	if (stage->getStageStart() == 0 && posY <= -161)
 	{
 		isGameClear = 1;
-		musicCount = 1;
+		musicCount = 0;
 	}
 }
 
@@ -178,6 +178,10 @@ void Character::move(Stage* stage, int map[96][20])
 				{
 					stage->setIsChangeStage(1);
 				}
+				if (stage->getStageStart() == 0)
+				{
+					posY++;
+				}
 			}
 		}
 		if (isClimb == 1)
@@ -253,13 +257,22 @@ void Character::draw(Stage* stage, int GH1, int GH2, int GH3, int SH1, int SH2)
 			DrawRectGraph(posX - 32, posY - 32, animationPoint * 64, 0, 64, 128, GH2, 1, 1);
 			animationCount++;
 		}
-		if (CheckSoundMem(SH1) == 0)
+		if (musicCount == 1)
 		{
-			PlaySoundMem(SH1, DX_PLAYTYPE_BACK, 1);
-		}
-		if (CheckSoundMem(SH1) == 1)
+			if (CheckSoundMem(SH1) == 0)
+			{
+				PlaySoundMem(SH1, DX_PLAYTYPE_BACK, 1);
+			}
+			if (CheckSoundMem(SH1) == 1)
+			{
+				StopSoundMem(SH2);
+			}
+		} else if (musicCount == 0)
 		{
-			StopSoundMem(SH2);
+			if (CheckSoundMem(SH1) == 1)
+			{
+				StopSoundMem(SH1);
+			}
 		}
 	}
 	if (isAnimation == CLIMB)
@@ -273,17 +286,25 @@ void Character::draw(Stage* stage, int GH1, int GH2, int GH3, int SH1, int SH2)
 				animationPoint = 0;
 			}
 		}
-		/*DrawBox(posX - 32, posY - 32, posX + 32, posY + 96, GetColor(0, 180, 100), 1);
-		DrawBox(posX - 32, posY - 32, posX + 32, posY + 96, GetColor(255, 255, 255), 0);*/
 		DrawRectGraph(posX - 32, posY - 32, animationPoint * 64, 0, 64, 128, GH3, 1, 0);
 		animationCount++;
-		if (CheckSoundMem(SH1) == 0)
+		if (musicCount == 1)
 		{
-			PlaySoundMem(SH1, DX_PLAYTYPE_BACK, 1);
+			if (CheckSoundMem(SH1) == 0)
+			{
+				PlaySoundMem(SH1, DX_PLAYTYPE_BACK, 1);
+			}
+			if (CheckSoundMem(SH1) == 1)
+			{
+				StopSoundMem(SH2);
+			}
 		}
-		if (CheckSoundMem(SH1) == 1)
+		else if (musicCount == 0)
 		{
-			StopSoundMem(SH2);
+			if (CheckSoundMem(SH1) == 1)
+			{
+				StopSoundMem(SH1);
+			}
 		}
 	}
 	if (isAnimation == DEAD)

@@ -6,6 +6,8 @@ Poison::Poison()
 	posY = 768;
 	collisionY = 768;
 	count = 0;
+	animationNumber = 0;
+	animationCount = 0;
 }
 
 int Poison::getCollisionY() { return collisionY; }
@@ -15,6 +17,8 @@ void Poison::reset()
 	posY = 768;
 	collisionY = 768;
 	count = 0;
+	animationNumber = 0;
+	animationCount = 0;
 }
 
 void Poison::move(Stage *stage)
@@ -41,9 +45,19 @@ void Poison::move(Stage *stage)
 	}
 }
 
-void Poison::draw(Stage* stage)
+void Poison::draw(Stage* stage, int GH1)
 {
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
-	DrawBox(0, posY + 5376 + stage->getStageStart(), 1280, posY + 6144 + stage->getStageStart(), GetColor(255, 0, 255), 1);
+	if (animationCount >= 10)
+	{
+		animationCount = 0;
+		animationNumber++;
+		if (animationNumber >= 6)
+		{
+			animationNumber = 0;
+		}
+	}
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 140);
+	DrawRectGraph(0, posY + 5376 + stage->getStageStart(), animationNumber * 1280, 0, 1280, 768, GH1, 1, 0);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 100);
+	animationCount++;
 }

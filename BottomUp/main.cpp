@@ -12,15 +12,15 @@ const int WIN_HEIGHT = 844; //ウィンドウ縦幅
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
 {
-	ChangeWindowMode(TRUE);						//ウィンドウモードに設定
+	ChangeWindowMode(TRUE);		//ウィンドウモードに設定
 	//ウィンドウサイズを手動では変更できず、かつウィンドウサイズに合わせて拡大できないようにする
 	SetWindowSizeChangeEnableFlag(FALSE, FALSE);
-	SetMainWindowText(TITLE);					// タイトルを変更
+	SetMainWindowText(TITLE);			// タイトルを変更
 	SetGraphMode(WIN_WIDTH, WIN_HEIGHT, 32);	//画面サイズの最大サイズ、カラービット数を設定（モニターの解像度に合わせる）
-	SetWindowSizeExtendRate(0.8);				//画面サイズを設定（解像度との比率で設定）
+	SetWindowSizeExtendRate(0.8);			//画面サイズを設定（解像度との比率で設定）
 	SetBackgroundColor(0, 0, 255);		// 画面の背景色を設定する
 	//ChangeWindowMode(1);		//フルスクリーン
-	SetMouseDispFlag(TRUE);				//マウス表示
+	SetMouseDispFlag(TRUE);		//マウス表示
 
 	//Dxライブラリの初期化
 	if (DxLib_Init() == -1) { return -1; }
@@ -40,7 +40,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	soundHandle[7] = LoadSoundMem("ゲームクリアBGM.mp3");
 	soundHandle[8] = LoadSoundMem("ゲームオーバーBGM.mp3");
 
-	int graphHandle[9];
+	int graphHandle[11];
 	graphHandle[0] = LoadGraph("back1.png");
 	graphHandle[1] = LoadGraph("back2.png");
 	graphHandle[2] = LoadGraph("back3.png");
@@ -50,6 +50,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	graphHandle[6] = LoadGraph("block.png");
 	graphHandle[7] = LoadGraph("ladder.png");
 	graphHandle[8] = LoadGraph("wall.png");
+	graphHandle[9] = LoadGraph("board.png");
+	graphHandle[10] = LoadGraph("poison.png");
 
 	//ゲームループで使う変数の宣言
 	char keys[256] = { 0 }; //最新のキーボード情報用
@@ -174,7 +176,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	ChangeVolumeSoundMem(100, soundHandle[1]);
 	ChangeVolumeSoundMem(100, soundHandle[2]);
 	ChangeVolumeSoundMem(100, soundHandle[3]);
-	ChangeVolumeSoundMem(100, soundHandle[4]);
+	ChangeVolumeSoundMem(200, soundHandle[4]);
 	ChangeVolumeSoundMem(100, soundHandle[5]);
 	ChangeVolumeSoundMem(100, soundHandle[6]);
 	ChangeVolumeSoundMem(100, soundHandle[7]);
@@ -353,9 +355,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		}
 		if (isGame == 1)
 		{
-			stage->draw(map, graphHandle[0], graphHandle[1], graphHandle[2], graphHandle[6], graphHandle[7], graphHandle[8]);
+			stage->draw(map, graphHandle[0], graphHandle[1], graphHandle[2], graphHandle[6], graphHandle[7], graphHandle[9], graphHandle[8]);
 			character->draw(stage, graphHandle[3], graphHandle[4], graphHandle[5], soundHandle[4], soundHandle[6]);
-			poison->draw(stage);
+			poison->draw(stage, graphHandle[10]);
 			item->draw(WIN_WIDTH, WIN_HEIGHT, cursorX, cursorY);
 		}
 		if (isGameClear == 1)
