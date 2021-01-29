@@ -7,9 +7,7 @@ class Item
 private:
 	int boxPosX;
 	int boxPosY;
-	int isSelect;
-	int isCarry;
-	int isPut;
+	int is
 
 public:
 	Item();
